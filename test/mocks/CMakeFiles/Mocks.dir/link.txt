@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMocks.a  CMakeFiles/Mocks.dir/RuntimeErrorStub.c.o
+/usr/bin/ranlib libMocks.a
