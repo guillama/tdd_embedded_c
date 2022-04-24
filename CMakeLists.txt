@@ -22,11 +22,3 @@ elseif(CIBLE STREQUAL test)
 else() 
   message(FATAL_ERROR "I don't know the CIBLE you gave me!")
 endif()
-
-# add_library(Unity STATIC
-#   Unity/src/unity.c
-# )
-
-# target_include_directories(Unity PUBLIC
-#   Unity/src
-# )
