@@ -19,6 +19,7 @@ elseif(CIBLE STREQUAL test)
 
   add_subdirectory(test)
   add_subdirectory(Unity)
+  add_subdirectory(cpputest)
 else() 
   message(FATAL_ERROR "I don't know the CIBLE you gave me!")
 endif()
