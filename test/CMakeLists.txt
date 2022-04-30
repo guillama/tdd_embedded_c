@@ -5,26 +5,23 @@ project(LedDriverTests)
 add_subdirectory(mocks)
 
 add_executable(LedDriverTests LedDriverTest.c)
-add_executable(ModuleTest ModuleTest.cpp)
+add_executable(LightControllerSpyTest LightControllerSpyTest.cpp FakeTimeServiceTest.cpp)
 
 target_link_libraries(LedDriverTests
-LedDriver
-Unity
-Mocks)
+  LedDriver
+  Unity
+  Mocks
+)
 
-target_link_libraries(ModuleTest
-LedDriver
-CppUTest
-CppUTestExt
+target_link_libraries(LightControllerSpyTest
+  LightControllerSpy
+  CppUTest
+  CppUTestExt
 )
 
 add_library(Unity STATIC
   ../Unity/src/unity.c
 )
-
-# add_library(CppUTest STATIC
-#   ../cpputest/src/CppUTest/UTest.cpp
-# )
 
 target_include_directories(Unity PUBLIC
   ../Unity/src
@@ -32,9 +29,6 @@ target_include_directories(Unity PUBLIC
 
 include_directories(CppUTest PUBLIC
   ../cpputest/include
-)
-
-link_directories(CppUTest PUBLIC
   ../cpputest/Lib
 )
 
@@ -44,6 +38,6 @@ add_test(
 )
 
 add_test(
-    NAME ModuleTest
-    COMMAND ModuleTest
+    NAME LightControllerSpyTest
+    COMMAND LightControllerSpyTest
 )
