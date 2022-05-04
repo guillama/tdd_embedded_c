@@ -43,3 +43,32 @@ TEST(FakeTimeService, Set)
     LONGS_EQUAL(42, time.minutesOfDay);
 }
 
+
+TEST(FakeTimeService, SetPeriodicAlarm)
+{
+    TimeService_SetPeriodicAlarmInSeconds(30, TimeService_Create);
+
+    POINTERS_EQUAL((void *)TimeService_Create, (void *)FakeTimeService_GetAlarmCallback());
+    LONGS_EQUAL(30, FakeTimeService_GetAlarmPeriod());
+}
+
+
+TEST(FakeTimeService, CancelPeriodicAlarmButBadPeriod)
+{
+    TimeService_SetPeriodicAlarmInSeconds(30, TimeService_Create);
+    TimeService_CancelPeriodicAlarmInSeconds(60, TimeService_Create);
+
+    POINTERS_EQUAL((void *)TimeService_Create, (void *)FakeTimeService_GetAlarmCallback());
+    LONGS_EQUAL(30, FakeTimeService_GetAlarmPeriod());
+}
+
+
+TEST(FakeTimeService, CancelPeriodicAlarmButBadCallback)
+{
+    TimeService_SetPeriodicAlarmInSeconds(30, TimeService_Create);
+    TimeService_CancelPeriodicAlarmInSeconds(30, NULL);
+
+    POINTERS_EQUAL((void *)TimeService_Create, (void *)FakeTimeService_GetAlarmCallback());
+    LONGS_EQUAL(30, FakeTimeService_GetAlarmPeriod());
+}
+

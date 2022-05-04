@@ -16,8 +16,14 @@ void LightController_Destroy(void)
 
 void LightController_On(int id)
 {
-    lightId = 10;
+    lightId = id;
     lightState = LIGHT_ON;
+}
+
+void LightController_Off(int id)
+{
+    lightId = id;
+    lightState = LIGHT_OFF;
 }
 
 int LightControllerSpy_GetLastId(void)

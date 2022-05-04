@@ -9,6 +9,7 @@ add_library(LedDriver STATIC
 
 add_library(LightControllerSpy STATIC
     LightControllerSpy.cpp
+    LightScheduler.cpp
     FakeTimeService.cpp
 )
 

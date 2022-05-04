@@ -6,4 +6,7 @@
 void FakeTimeService_SetDay(int day);
 void FakeTimeService_SetMinute(int minutes);
 
+WakeUpCalllback FakeTimeService_GetAlarmCallback();
+int FakeTimeService_GetAlarmPeriod();
+
 #endif

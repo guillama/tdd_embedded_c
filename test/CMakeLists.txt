@@ -5,7 +5,11 @@ project(LedDriverTests)
 add_subdirectory(mocks)
 
 add_executable(LedDriverTests LedDriverTest.c)
-add_executable(LightControllerSpyTest LightControllerSpyTest.cpp FakeTimeServiceTest.cpp)
+
+add_executable(LightControllerSpyTest 
+LightControllerSpyTest.cpp
+LightSchedulerTest.cpp
+FakeTimeServiceTest.cpp)
 
 target_link_libraries(LedDriverTests
   LedDriver

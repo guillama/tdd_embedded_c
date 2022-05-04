@@ -31,4 +31,5 @@
     "unityExplorer.testBuildApplication": "make",
     //"unityExplorer.testBuildTargetRegex": "test/LedDriverTests",
     "unityExplorer.testExecutableRegex": "build/test/LedDriverTests",
+    "C_Cpp.errorSquiggles": "Disabled",
 }
