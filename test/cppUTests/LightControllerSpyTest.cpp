@@ -1,6 +1,4 @@
 #include "CppUTest/TestHarness.h"
-#include "CppUTest/CommandLineTestRunner.h"
-
 
 #include "LightControllerSpy.h"
 
@@ -27,11 +25,16 @@ TEST(LightControllerSpy, Create)
 TEST(LightControllerSpy, RememberTheLastLightIdControlled)
 {
     LightController_On(10);
+
     LONGS_EQUAL(10, LightControllerSpy_GetLastId());
     LONGS_EQUAL(LIGHT_ON, LightControllerSpy_GetLastState());
 }
 
-int main(int ac, char** av)
+TEST(LightControllerSpy, RememberAllLightStates)
 {
-  return RUN_ALL_TESTS(ac, av);
+    LightController_On(1);
+    LightController_Off(30);
+
+    LONGS_EQUAL(LIGHT_ON, LightControllerSpy_GetLightState(1));
+    LONGS_EQUAL(LIGHT_OFF, LightControllerSpy_GetLightState(30));
 }

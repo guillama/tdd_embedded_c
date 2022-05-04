@@ -1,4 +1,3 @@
-#include "CppUTest/CommandLineTestRunner.h"
 #include "CppUTest/TestHarness.h"
 
 #include "LightScheduler.h"
@@ -18,8 +17,14 @@ static void setTimeTo(int day, int minutes)
 
 static void checkLightState(int id, int state)
 {
-  LONGS_EQUAL(id, LightControllerSpy_GetLastId());
-  LONGS_EQUAL(state, LightControllerSpy_GetLastState());
+  if (id == LIGHT_ID_UNKNOWN)
+  {
+    LONGS_EQUAL(id, LightControllerSpy_GetLastId());
+    LONGS_EQUAL(state, LightControllerSpy_GetLastState());
+  }
+  else
+    LONGS_EQUAL(state, LightControllerSpy_GetLightState(id));
+
 }
 
 
@@ -151,26 +156,69 @@ TEST(LightScheduler, ScheduleWeekendAnItsSunday)
 }
 
 
-TEST_GROUP(LightSchedulerInitAndCleanup)
+TEST(LightScheduler, ScheduleTwoEventsAttheSameTime)
 {
+  LightScheduler_ScheduleTurnOn(1, TUESDAY, 1000);
+  LightScheduler_ScheduleTurnOn(2, TUESDAY, 1000);
 
-};
+  setTimeTo(TUESDAY, 1000);
 
+  LightScheduler_WakeUp();
 
-TEST(LightSchedulerInitAndCleanup, DestroyCancelsOneMinuteAlarm)
-{
-  LightScheduler_Create();
-  LightScheduler_Destroy();
-  POINTERS_EQUAL(NULL, (void *)FakeTimeService_GetAlarmCallback());
+  checkLightState(1, LIGHT_ON);
+  checkLightState(2, LIGHT_ON);
 }
 
 
-TEST(LightSchedulerInitAndCleanup, CreateStartsOneMinuteAlarm)
+TEST(LightScheduler, RejectsTooManyEvents)
 {
-  LightScheduler_Create();
-  POINTERS_EQUAL( (void *)LightScheduler_WakeUp,
-                  (void *)FakeTimeService_GetAlarmCallback());
+  for (int i = 0; i < MAX_SCHEDULE; i++)
+  {
+    LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(1, TUESDAY, 1000 + i));
+  }
 
-  LONGS_EQUAL(60, FakeTimeService_GetAlarmPeriod());
-  LightScheduler_Destroy();
+  LONGS_EQUAL(LS_TOO_MANY_EVENTS, LightScheduler_ScheduleTurnOn(1, TUESDAY, 1000 + 129));
+}
+
+
+TEST(LightScheduler, RemoveRecycleSlot)
+{
+  for (int i = 0; i < MAX_SCHEDULE; i++)
+  {
+    LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(1, TUESDAY, 1000 + i));
+  }
+
+  LightScheduler_ScheduleRemove(1, TUESDAY, 1000);
+
+  LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(1, TUESDAY, 1000 + 129));
+}
+
+
+TEST(LightScheduler, RemoveMultipleScheduledEvent)
+{
+  LightScheduler_ScheduleTurnOn(6, MONDAY, 1200);
+  LightScheduler_ScheduleTurnOn(7, MONDAY, 1200);
+  LightScheduler_ScheduleRemove(7, MONDAY, 1200);
+
+  setTimeTo(MONDAY, 1200);
+
+  LightScheduler_WakeUp();
+
+  checkLightState(6, LIGHT_ON);
+  checkLightState(7, LIGHT_STATE_UNKNOWN);
+}
+
+
+TEST(LightScheduler, AcceptsValidLightIds)
+{
+  LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(0, MONDAY, 600));
+  LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(15, MONDAY, 600));
+  LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(31, MONDAY, 600));
+}
+
+
+TEST(LightScheduler, RejectsInvalidLightIds)
+{
+  LONGS_EQUAL(LS_LIGHT_OUT_OF_BOUNDS, LightScheduler_ScheduleTurnOn(-1, MONDAY, 600));
+  LONGS_EQUAL(LS_LIGHT_OUT_OF_BOUNDS, LightScheduler_ScheduleTurnOn(32, MONDAY, 600));
 }
