@@ -4,29 +4,6 @@
 #include "LightControllerSpy.h"
 #include "FakeTimeService.h"
 
-static void setTimeTo(int day, int minutes);
-static void checkLightState(int id, int state);
-
-
-static void setTimeTo(int day, int minutes)
-{
-  FakeTimeService_SetDay(day);
-  FakeTimeService_SetMinute(minutes);
-}
-
-
-static void checkLightState(int id, int state)
-{
-  if (id == LIGHT_ID_UNKNOWN)
-  {
-    LONGS_EQUAL(id, LightControllerSpy_GetLastId());
-    LONGS_EQUAL(state, LightControllerSpy_GetLastState());
-  }
-  else
-    LONGS_EQUAL(state, LightControllerSpy_GetLightState(id));
-
-}
-
 
 TEST_GROUP(LightScheduler)
 {
@@ -40,6 +17,24 @@ TEST_GROUP(LightScheduler)
   {
     LightController_Destroy();
     LightScheduler_Destroy();
+  }
+
+  void setTimeTo(int day, int minutes)
+  {
+    FakeTimeService_SetDay(day);
+    FakeTimeService_SetMinute(minutes);
+  }
+
+
+  void checkLightState(int id, int state)
+  {
+    if (id == LIGHT_ID_UNKNOWN)
+    {
+      LONGS_EQUAL(id, LightControllerSpy_GetLastId());
+      LONGS_EQUAL(state, LightControllerSpy_GetLastState());
+    }
+    else
+      LONGS_EQUAL(state, LightControllerSpy_GetLightState(id));
   }
 };
 

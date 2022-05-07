@@ -6,11 +6,13 @@ add_executable(LightSchedulerTests
 LightControllerSpyTest.cpp
 LightSchedulerTest.cpp
 FakeTimeServiceTest.cpp
-LightSchedulerInitAndCleanupTest
+LightSchedulerInitAndCleanupTest.cpp
+RandomMinuteTest.cpp
+LightSchedulerRandomizeTest.cpp
 AllTests.cpp)
 
 target_link_libraries(LightSchedulerTests
-  LightControllerSpy
+  LightScheduler
   CppUTest
   CppUTestExt
 )
