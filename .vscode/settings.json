@@ -23,13 +23,8 @@
     },
     "cmake.configureOnOpen": true,
 
-    "unityExplorer.testSourceFolder": "test",
-    "unityExplorer.testSourceFileRegex": "LedDriverTest.c",
-    "unityExplorer.testCaseRegex": "void.+(test_[a-zA-Z]*)",
-
-    "unityExplorer.testBuildCwdPath": "build",
-    "unityExplorer.testBuildApplication": "make",
-    //"unityExplorer.testBuildTargetRegex": "test/LedDriverTests",
-    "unityExplorer.testExecutableRegex": "build/test/LedDriverTests",
     "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "string_view": "cpp"
+    },
 }
