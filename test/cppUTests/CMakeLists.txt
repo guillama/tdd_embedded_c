@@ -9,6 +9,7 @@ FakeTimeServiceTest.cpp
 LightSchedulerInitAndCleanupTest.cpp
 RandomMinuteTest.cpp
 LightSchedulerRandomizeTest.cpp
+FormatOutputSpyTest.cpp
 AllTests.cpp)
 
 target_link_libraries(LightSchedulerTests

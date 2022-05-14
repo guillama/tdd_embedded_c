@@ -11,8 +11,10 @@ add_library(LightScheduler STATIC
     LightControllerSpy.cpp
     LightScheduler.cpp
     FakeTimeService.cpp
-    RandomMinute.cpp
+    RandomMinute.c
     FakeRandomMinute.cpp
+    FormatOutputSpy.cpp
+    Utils.c
 )
 
 target_include_directories(LedDriver PUBLIC
