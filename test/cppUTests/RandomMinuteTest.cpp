@@ -2,8 +2,10 @@
 #include <string.h>
 #include "CppUTest/TestHarness.h"
 
-#include "RandomMinute.h"
-
+extern "C"
+{
+    #include "RandomMinute.h"
+}
 
 enum { BOUND = 30 };
 
