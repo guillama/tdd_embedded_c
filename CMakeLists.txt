@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.11)
 project(LedDriver)
 
 set(CMAKE_C_STANDARD 90)
-set(CMAKE_C_FLAGS "-Wall -Werror")
+set(CMAKE_C_FLAGS "-Wall -Werror -Wextra -g -O0")
 
 # We declare a variable to select what to build set
 set(CIBLE production CACHE STRING "What Should I Build?")

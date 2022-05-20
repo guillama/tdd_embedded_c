@@ -2,15 +2,23 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
 
-static int myLength;
+static int message_len;
 static char * message;
+
+static int message_offset;
+static int message_used;
 
 void FormatOutputSpy_Create(int length)
 {
-    myLength = length;
+    message_len = length + 1;
 
-    message = (char *)calloc(myLength + 1, sizeof(char));
+    message = (char *)calloc(message_len + 1, sizeof(char));
+
+    message_offset = 0;
+    message_used = 0;
 }
 
 void FormatOutputSpy_Destroy()
@@ -23,9 +31,24 @@ char * FormatOutputSpy_GetOutput()
     return message;
 }
 
-int FormatOutputSpy(const char * msg, ...)
+int FormatOutputSpy(const char * format, ...)
 {
-    strncat(message, msg, myLength - strlen(message));
+    int written_size;
+    va_list args;
+
+    va_start(args, format);
+
+    written_size = vsnprintf(  message + message_offset, 
+                                message_len - message_used, 
+                                format, 
+                                args);
+
+    message_offset += written_size;
+    message_used += written_size;
+
+    va_end(args);
+
+    //strncat(message, format, message_len - strlen(message));
 
     return 1;
 }
