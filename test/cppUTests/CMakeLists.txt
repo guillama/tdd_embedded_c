@@ -10,6 +10,7 @@ LightSchedulerInitAndCleanupTest.cpp
 RandomMinuteTest.cpp
 LightSchedulerRandomizeTest.cpp
 FormatOutputSpyTest.cpp
+CircularBufferPrintTest.cpp
 AllTests.cpp)
 
 target_link_libraries(LightSchedulerTests

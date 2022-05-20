@@ -14,6 +14,7 @@ add_library(LightScheduler STATIC
     RandomMinute.c
     FakeRandomMinute.cpp
     FormatOutputSpy.cpp
+    CircularBuffer.c
     Utils.c
 )
 
