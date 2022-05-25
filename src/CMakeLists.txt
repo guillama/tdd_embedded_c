@@ -18,10 +18,18 @@ add_library(LightScheduler STATIC
     Utils.c
 )
 
+add_library(Flash STATIC
+    Flash.c
+)
+
 target_include_directories(LedDriver PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}
 )
 
 target_include_directories(LightScheduler PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(Flash PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}
 )
