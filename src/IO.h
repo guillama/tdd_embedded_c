@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 
-typedef uint32_t ioAdress;
+typedef uint32_t ioAddress;
 typedef uint16_t ioData;
 
-ioData IO_Read(ioAdress offset);
-void IO_Write(ioAdress offset, ioData data);
+ioData IO_Read(ioAddress offset);
+void IO_Write(ioAddress offset, ioData data);
 
 #endif
