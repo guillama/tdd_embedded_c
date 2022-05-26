@@ -20,6 +20,7 @@ add_library(LightScheduler STATIC
 
 add_library(Flash STATIC
     Flash.c
+    FakeMicroTime.c
 )
 
 target_include_directories(LedDriver PUBLIC

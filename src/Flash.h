@@ -3,6 +3,8 @@
 
 #include "IO.h"
 
+#define FLASH_WRITE_TIMEOUT_US 5000
+
 typedef enum
 {
     CommandRegister = 0x0,
@@ -22,6 +24,7 @@ enum
     FLASH_SUCCESS = 0,
     FLASH_VPP_ERROR = 3,
     FLASH_READ_BACK_ERROR = 7,
+    FLASH_TIMEOUT_ERROR = 8,
 };
 
 enum

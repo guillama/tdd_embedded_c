@@ -2,6 +2,7 @@
 #include "MockIO.h"
 
 #include "Flash.h"
+#include "FakeMicroTime.h"
 
 int result = 0;
 ioAddress address;
@@ -79,6 +80,7 @@ void test_WritesucceedsIgnoreOtherBitsUntilReady()
 {
     IO_Write_Expect(CommandRegister, ProgramCommand);
     IO_Write_Expect(address, data);
+
     IO_Read_ExpectAndReturn(StatusRegister, ~ReadyBit);
     IO_Read_ExpectAndReturn(StatusRegister, ReadyBit);
     IO_Read_ExpectAndReturn(address, data-1);
@@ -86,6 +88,23 @@ void test_WritesucceedsIgnoreOtherBitsUntilReady()
     result = Flash_Write(address, data);
 
     TEST_ASSERT_EQUAL_INT(FLASH_READ_BACK_ERROR, result);
+}
+
+void test_WriteFailedBecauseOfTimeout()
+{
+    int i = 0;
+
+    FakeMicroTime_Create(0, 500);
+
+    IO_Write_Expect(CommandRegister, ProgramCommand);
+    IO_Write_Expect(address, data);
+
+    for(i = 0; i < 10; i++)
+        IO_Read_ExpectAndReturn(StatusRegister, ~ReadyBit);
+
+    result = Flash_Write(address, data);
+
+    TEST_ASSERT_EQUAL_INT(FLASH_TIMEOUT_ERROR, result);
 }
 
 int main(void)
@@ -97,6 +116,7 @@ int main(void)
     RUN_TEST(test_WriteFailsBecauseVppError);
     RUN_TEST(test_WriteFailedBecauseReadBackError);
     RUN_TEST(test_WritesucceedsIgnoreOtherBitsUntilReady);
+    RUN_TEST(test_WriteFailedBecauseOfTimeout);
 
     return UNITY_END();
 }
