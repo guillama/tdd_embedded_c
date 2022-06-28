@@ -2,29 +2,5 @@ cmake_minimum_required(VERSION 3.11)
 
 project(LightSchedulerTests)
 
-add_executable(LightSchedulerTests 
-LightControllerSpyTest.cpp
-LightSchedulerTest.cpp
-FakeTimeServiceTest.cpp
-LightSchedulerInitAndCleanupTest.cpp
-RandomMinuteTest.cpp
-LightSchedulerRandomizeTest.cpp
-FormatOutputSpyTest.cpp
-CircularBufferPrintTest.cpp
-AllTests.cpp)
-
-target_link_libraries(LightSchedulerTests
-  LightScheduler
-  CppUTest
-  CppUTestExt
-)
-
-include_directories(CppUTest PUBLIC
-  ../cpputest/include
-  ../cpputest/Lib
-)
-
-add_test(
-    NAME LightSchedulerTests
-    COMMAND LightSchedulerTests
-)
+add_subdirectory(CircularBuffer)
+add_subdirectory(LightScheduler)

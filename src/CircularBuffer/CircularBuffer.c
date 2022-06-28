@@ -39,9 +39,6 @@ void CircularBuffer_Print(CircularBuffer buffer)
     if (nval > 0)
         FormatOutput("%d", buffer->values[buffer->outIndex]);
 
-    printf("start: %d, end: %d", buffer->outIndex, nval + buffer->outIndex);
-
-
     for (i = buffer->outIndex + 1; i < nval + buffer->outIndex; i++)
     {
         int index = i % buffer->size;
@@ -54,8 +51,6 @@ void CircularBuffer_Print(CircularBuffer buffer)
 void CircularBuffer_Put(CircularBuffer buffer, int val)
 {
     int index = buffer->inIndex % buffer->size;
-
-    printf("index %d\n", index);
 
     buffer->values[index] = val;
     buffer->inIndex++;

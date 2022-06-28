@@ -25,6 +25,8 @@
 
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "array": "c",
+        "string": "c"
     },
 }
