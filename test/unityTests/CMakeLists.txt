@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.11)
-
-project(LedDriverTests)
-
 set(CMOCK_PATH ../../cmock)
 
 add_subdirectory(mocks)
@@ -16,12 +12,12 @@ target_link_libraries(LedDriverTests
   Mocks
 )
 
-add_executable(FlashTest
+add_executable(FlashTests
   FlashTest.c 
   ../../build/mocks/MockIO.c
 )
 
-target_link_libraries(FlashTest
+target_link_libraries(FlashTests
   Flash
   Unity
   cmock
@@ -53,6 +49,6 @@ add_test(
 )
 
 add_test(
-    NAME FlashTest
-    COMMAND FlashTest
+    NAME FlashTests
+    COMMAND FlashTests
 )

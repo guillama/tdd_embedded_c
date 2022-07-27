@@ -7,17 +7,17 @@ Build
 
 ```
 cd tdd_embedded_c
-cmake -S . -B build -DCIBLE=test
-cmake --build build/
+cmake -S . -B build
+cmake --build build/ -t [CircularBufferTests][LightSchedulerTests][LedDriverTests][FlashTest]
 ```
 
 Execution
 =========
 
 ```
-build/test/cppUTests/CircularBuffer/CircularBufferTests
-build/test/cppUTests/LightScheduler/LightSchedulerTests
+build/bin/CircularBufferTests
+build/bin/LightSchedulerTests
 
-build/test/unityTests/LedDriverTests
-build/test/unityTests/FlashTest
+build/bin/LedDriverTests
+build/bin/FlashTests
 ```

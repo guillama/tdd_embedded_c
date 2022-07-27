@@ -1,10 +1,6 @@
-cmake_minimum_required(VERSION 3.11)
-
-project(CircularBufferTests)
-
 add_executable(CircularBufferTests 
-CircularBufferPrintTest.cpp
-AllTests.cpp)
+  CircularBufferPrintTest.cpp
+  AllTests.cpp)
 
 target_link_libraries(CircularBufferTests
   LightScheduler
