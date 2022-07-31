@@ -1,4 +1,4 @@
 include(CTest)
 
-add_subdirectory(unityTests)
-add_subdirectory(cppUTests)
+add_subdirectory(unity)
+add_subdirectory(cpputest)
