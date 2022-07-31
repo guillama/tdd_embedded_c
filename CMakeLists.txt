@@ -10,6 +10,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMOCK_PATH ${CMAKE_CURRENT_LIST_DIR}/cmock)
 set(UNITY_PATH ${CMAKE_CURRENT_LIST_DIR}/Unity)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(Unity)
