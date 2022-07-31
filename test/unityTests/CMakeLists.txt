@@ -1,54 +1,29 @@
-set(CMOCK_PATH ../../cmock)
-
-add_subdirectory(mocks)
-
-add_executable(LedDriverTests 
-  LedDriverTest.c 
-)
-
-target_link_libraries(LedDriverTests
-  LedDriver
-  Unity
-  Mocks
-)
-
-add_executable(FlashTests
-  FlashTest.c 
-  ../../build/mocks/MockIO.c
-)
-
-target_link_libraries(FlashTests
-  Flash
-  Unity
-  cmock
-)
+add_subdirectory(Flash)
+add_subdirectory(LedDriver)
 
 add_library(Unity STATIC
-  ../../Unity/src/unity.c
+${UNITY_PATH}/src/unity.c
 )
 
 target_include_directories(Unity PUBLIC
-  ../../Unity/src
+  ${UNITY_PATH}/src
 )
 
-add_library(cmock
+add_library(cmock STATIC
     ${CMOCK_PATH}/src/cmock.c
-    ${CMOCK_PATH}/src/cmock.h
-    ${CMOCK_PATH}/src/cmock_internals.h
+)
+
+target_include_directories(cmock PRIVATE
+  ${CMOCK_PATH}/src
 )
 
 target_include_directories(cmock PUBLIC
-../../build/mocks
-../../Unity/src
-${CMOCK_PATH}/src/
+  ${UNITY_PATH}/src
+  ${CMOCK_PATH}/src/
 )
 
-add_test(
-    NAME LedDriverTests
-    COMMAND LedDriverTests
-)
-
-add_test(
-    NAME FlashTests
-    COMMAND FlashTests
+add_custom_command(TARGET cmock PRE_BUILD
+  COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb 
+  ARGS -o${CMAKE_CURRENT_LIST_DIR}/maconfig.yml 
+  ARGS ${CMAKE_SOURCE_DIR}/src/Flash/IO.h
 )
