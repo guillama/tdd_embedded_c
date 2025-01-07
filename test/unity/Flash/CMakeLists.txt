@@ -1,6 +1,6 @@
 add_executable(FlashTests
-  FlashTest.c 
-  ${CMAKE_BINARY_DIR}/cmock/MockIO.c
+  FlashTest.c
+  ${CMOCK_PATH}/lib/build/cmock/MockIO.c
 )
 
 target_link_libraries(FlashTests
@@ -11,7 +11,7 @@ target_link_libraries(FlashTests
 
 target_include_directories(FlashTests PUBLIC
   ${UNITY_PATH}/src
-  ${CMAKE_BINARY_DIR}/cmock
+  ${CMOCK_PATH}/lib/build/cmock
 )
 
 add_test(
