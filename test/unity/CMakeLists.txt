@@ -1,6 +1,3 @@
-add_subdirectory(Flash)
-add_subdirectory(LedDriver)
-
 add_library(Unity STATIC
 ${UNITY_PATH}/src/unity.c
 )
@@ -22,9 +19,5 @@ target_include_directories(cmock PUBLIC
   ${CMOCK_PATH}/src/
 )
 
-add_custom_command(TARGET cmock PRE_BUILD
-  COMMENT "Generating mocks headers"
-  COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb
-  ARGS -o${CMAKE_CURRENT_LIST_DIR}/maconfig.yml
-  ARGS ${CMAKE_SOURCE_DIR}/src/Flash/IO.h
-)
+add_subdirectory(Flash)
+add_subdirectory(LedDriver)
