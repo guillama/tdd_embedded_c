@@ -23,8 +23,8 @@ target_include_directories(cmock PUBLIC
 )
 
 add_custom_command(TARGET cmock PRE_BUILD
-  COMMENT "Generating mocks hearders"
-  COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb 
-  ARGS -o${CMAKE_CURRENT_LIST_DIR}/maconfig.yml 
+  COMMENT "Generating mocks headers"
+  COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb
+  ARGS -o${CMAKE_CURRENT_LIST_DIR}/maconfig.yml
   ARGS ${CMAKE_SOURCE_DIR}/src/Flash/IO.h
 )
